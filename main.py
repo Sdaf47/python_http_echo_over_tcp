@@ -24,6 +24,7 @@ def handler(conn, addr):
             break
 
     conn.send("0\r\n\r\n")
+    time.sleep(0.01)
     conn.close()
 
 
