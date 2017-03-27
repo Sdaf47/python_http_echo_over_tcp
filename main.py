@@ -5,13 +5,7 @@ import multiprocessing
 BUF_SIZE = 512
 
 
-def handler2():
-    print("Hello")
-
-
 def handler(conn, address):
-    print("worker start")
-
     conn.send("HTTP/1.1 200 OK\n".encode())
     conn.send("Transfer-Encoding: chunked\n".encode())
     conn.send("\r\n".encode())
