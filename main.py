@@ -1,6 +1,5 @@
 import socket
-import thread
-import time
+import multiprocessing
 
 BUF_SIZE = 512
 
@@ -25,17 +24,18 @@ def handler(conn, addr):
             break
 
     conn.send("0\r\n\r\n")
-    time.sleep(0.001)
     conn.close()
 
 
 if __name__ == '__main__':
     sock = socket.socket()
-    sock.bind(('0.0.0.0', 8000))
+    sock.bind(('', 8000))
     sock.listen(100)
     print("Start listening 8000 port for connections")
+
+    pool = multiprocessing.Pool(processes=multiprocessing.cpu_count())
 
     while True:
         conn, addr = sock.accept()
 
-        thread.start_new_thread(handler, (conn, addr))
+        pool.Process(target=handler, args=(conn, addr))
