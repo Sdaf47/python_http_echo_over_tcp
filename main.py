@@ -1,10 +1,17 @@
 import socket
+import concurrent.futures
 import multiprocessing
 
 BUF_SIZE = 512
 
 
-def handler(conn, addr):
+def handler2():
+    print("Hello")
+
+
+def handler(conn, address):
+    print("worker start")
+
     conn.send("HTTP/1.1 200 OK\n".encode())
     conn.send("Transfer-Encoding: chunked\n".encode())
     conn.send("\r\n".encode())
@@ -26,16 +33,19 @@ def handler(conn, addr):
     conn.send("0\r\n\r\n".encode())
     conn.close()
 
-if __name__ == '__main__':
-    pool = multiprocessing.Pool(processes=multiprocessing.cpu_count())
 
+def main():
     sock = socket.socket()
     sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
     sock.bind(('', 8000))
     sock.listen(100)
 
     print("Start listening 8000 port for connections")
-    while True:
-        conn, addr = sock.accept()
+    with concurrent.futures.ProcessPoolExecutor(max_workers=multiprocessing.cpu_count()) as executor:
+        while True:
+            conn, address = sock.accept()
+            executor.submit(handler, conn, address)
 
-        process = pool.apply_async(handler, (conn, addr))
+
+if __name__ == '__main__':
+    main()
