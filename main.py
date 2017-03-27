@@ -33,7 +33,7 @@ if __name__ == '__main__':
     sock = socket.socket()
     sock.bind(('0.0.0.0', 8000))
     sock.listen(100)
-    print "Start listening 8000 port for connections"
+    print("Start listening 8000 port for connections")
 
     while True:
         conn, addr = sock.accept()
