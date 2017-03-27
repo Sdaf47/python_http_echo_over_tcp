@@ -32,7 +32,7 @@ if __name__ == '__main__':
     sock = socket.socket()
     sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
     sock.bind(('', 8000))
-    sock.listen(100)
+    sock.listen(1)
 
     print("Start listening 8000 port for connections")
     while True:
