@@ -35,7 +35,7 @@ def main():
     sock.listen(100)
 
     print("Start listening 8000 port for connections")
-    with concurrent.futures.ProcessPoolExecutor(max_workers=multiprocessing.cpu_count()) as executor:
+    with concurrent.futures.ThreadPoolExecutor(max_workers=multiprocessing.cpu_count()) as executor:
         while True:
             conn, address = sock.accept()
             executor.submit(handler, conn, address)
