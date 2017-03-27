@@ -27,7 +27,7 @@ def handler(conn, addr):
     conn.close()
 
 if __name__ == '__main__':
-    pool = multiprocessing.Pool(processes=multiprocessing.cpu_count(), maxtasksperchild=1)
+    pool = multiprocessing.Pool(processes=multiprocessing.cpu_count())
 
     sock = socket.socket()
     sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
