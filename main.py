@@ -38,6 +38,4 @@ if __name__ == '__main__':
     while True:
         conn, addr = sock.accept()
 
-        process = pool.Process(target=handler, args=(conn, addr))
-        process.daemon = True
-        process.start()
+        process = pool.apply_async(handler, (conn, addr))
