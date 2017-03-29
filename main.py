@@ -6,9 +6,9 @@ BUF_SIZE = 512
 
 
 def handler(conn, address):
-    conn.send("HTTP/1.1 200 OK\n".encode())
-    conn.send("Transfer-Encoding: chunked\n".encode())
-    conn.send("\r\n".encode())
+    conn.send(b"HTTP/1.1 200 OK\n")
+    conn.send(b"Transfer-Encoding: chunked\n")
+    conn.send(b"\r\n")
 
     while True:
         data = conn.recv(BUF_SIZE)
@@ -19,12 +19,12 @@ def handler(conn, address):
 
         conn.send("{0:02x}\r\n".format(n).encode())
         conn.send(data)
-        conn.send("\r\n".encode())
+        conn.send(b"\r\n")
 
         if n < BUF_SIZE:
             break
 
-    conn.send("0\r\n\r\n".encode())
+    conn.send(b"0\r\n\r\n")
     conn.close()
 
 
